@@ -141,6 +141,7 @@ router.patch('/comment/:id/:comment', async (req, res) => {
 }) 
 //////////////////////////////////////user routes///////////////////
 const userModel = require('../models/User');
+// add user 
 router.post('/adduser', async (req, res) => {
     const data = new  userModel ({
         username: req.body.username,
@@ -154,5 +155,16 @@ router.post('/adduser', async (req, res) => {
     }
     catch (error) {
         res.status(400).json({message: error.message})
+    }
+})
+
+//get all users
+router.get('/getAllUsers', async (req, res) => {
+    try{
+        const data = await userModel.find();
+        res.json(data)
+    }
+    catch(error){
+        res.status(500).json({message: error.message})
     }
 })
