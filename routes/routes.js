@@ -191,3 +191,21 @@ userrouter.delete('/deleteUser/:id', async (req, res) => {
         res.status(400).json({ message: error.message })
     }
 })
+
+// update user
+router.patch('/updateUser/:id', async (req, res) => {
+    try {
+        const id = req.params.id;
+        const updatedData = req.body;
+        const options = { new: true };
+
+        const result = await usergitModel.findByIdAndUpdate(
+            id, updatedData, options
+        )
+
+        res.send(result)
+    }
+    catch (error) {
+        res.status(400).json({ message: error.message })
+    }
+})
