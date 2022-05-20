@@ -139,3 +139,20 @@ router.patch('/comment/:id/:comment', async (req, res) => {
                 res.status(500).json({message: error.message})
             }
 }) 
+//////////////////////////////////////user routes///////////////////
+const userModel = require('../models/User');
+router.post('/adduser', async (req, res) => {
+    const data = new  userModel ({
+        username: req.body.username,
+        dob: req.body.dob,
+        isSuspended: req.body.isSuspended
+    })
+
+    try {
+        const dataToSave = await data.save();
+        res.status(200).json(dataToSave)
+    }
+    catch (error) {
+        res.status(400).json({message: error.message})
+    }
+})
