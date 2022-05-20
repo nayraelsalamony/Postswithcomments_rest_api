@@ -1,6 +1,7 @@
 const express = require('express');
 const Model = require('../models/Article');
 const router = express.Router();
+/////////////////////////// article routes////////////////////////////////
 //Post 
 router.post('/article', async (req, res) => {
     const data = new Model({
@@ -70,3 +71,24 @@ router.patch('/edit/:id', async (req, res) => {
         res.status(400).json({ message: error.message })
     }
 })
+
+////////////////////////////////////comment routes////////////////////////
+ 
+//  add comment 
+router.post('/article/:id/addComment', async (req, res) => {
+    try{
+        const data = await Model.findOneAndUpdate(
+            req.params.id , 
+            { $push: { "comments" : {
+                content:  req.body.content,
+                username: req.body.username,
+            }  } },
+            {safe: true, upsert: true, new : true},
+           
+            );
+            res.json(data);
+            }
+            catch(error){
+                res.status(500).json({message: error.message})
+            }
+}) 
