@@ -92,3 +92,15 @@ router.post('/article/:id/addComment', async (req, res) => {
                 res.status(500).json({message: error.message})
             }
 }) 
+
+// get all comment for one post
+router.get('/article/:id/comments', async (req, res) => {
+    try{
+        const data = await Model.findById(req.params.id).select({ comments: 1 });
+        
+        res.json(data)
+    }
+    catch(error){
+        res.status(500).json({message: error.message})
+    }
+})
