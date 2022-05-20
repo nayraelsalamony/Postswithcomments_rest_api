@@ -227,7 +227,7 @@ userrouter.post('/user/suspend/:id', async (req, res) => {
 })
 
 //un Suspend user
-userrouter.post('/user/suspend/:id', async (req, res) => {
+userrouter.post('/user/unsuspend/:id', async (req, res) => {
     try{
         const data = await Model.findOneAndUpdate(
             req.params.id , 
@@ -241,3 +241,169 @@ userrouter.post('/user/suspend/:id', async (req, res) => {
                 res.status(500).json({message: error.message})
             }
 })
+
+//////////////HATEOAS  routes///////////
+router.get('/', (req, res) => {
+    res.json([{
+        "description": "get all articles url",
+        "links": [
+          {
+            "href": "/getAll",
+            "rel": "articles",
+            "type": "GET"
+          }
+        ]
+    },
+    {
+        "description": "get specific article url",
+        "links": [
+          {
+            "href": "/api/getone/:id",
+            "rel": "articles",
+            "type": "GET"
+          }
+        ]
+    },
+    {
+        "description": "add article url",
+        "links": [
+          {
+            "href": "/api/article",
+            "rel": "articles",
+            "type": "POST"
+          }
+        ]
+    },
+    {
+        "description": "Update specific article",
+        "links": [
+          {
+            "href": "/api/edit/:id",
+            "rel": "articles",
+            "type": "PATCH"
+          }
+        ]
+    },
+    {
+        "description": "Delete specific article",
+        "links": [
+          {
+            "href": "/api/delete/:id",
+            "rel": "articles",
+            "type": "DELETE"
+          }
+        ]
+    },
+    {
+        "description": "Get all comments of specific article",
+        "links": [
+          {
+            "href": "/api/article/:id/comments",
+            "rel": "articles,comments",
+            "type": "GET"
+          }
+        ]
+    },
+    {
+        "description": "Add comment to specific article",
+        "links": [
+          {
+            "href": "/api/article/:id/addComment",
+            "rel": "comments",
+            "type": "POST"
+          }
+        ]
+    },
+    {
+        "description": "Update specific comment",
+        "links": [
+          {
+            "href": "/api/comment/:id/:comment",
+            "rel": "comments",
+            "type": "PATCH"
+          }
+        ]
+    },
+    {
+        "description": "Delete specific comment",
+        "links": [
+          {
+            "href": "/api/comment/:id/:comment",
+            "rel": "comments",
+            "type": "DELETE"
+          }
+        ]
+    },
+    {
+        "description": "Get all users url",
+        "links": [
+          {
+            "href": "/api/getAllUsers",
+            "rel": "users",
+            "type": "GET"
+          }
+        ]
+    },
+    {
+        "description": "get one user url",
+        "links": [
+          {
+            "href": "/api/getOneUser/:id",
+            "rel": "users",
+            "type": "GET"
+          }
+        ]
+    },
+    {
+        "description": "add user url",
+        "links": [
+          {
+            "href": "/api/adduser",
+            "rel": "users",
+            "type": "POST"
+          }
+        ]
+    },
+    {
+        "description": "Update specific user",
+        "links": [
+          {
+            "href": "/api/updateUser/:id",
+            "rel": "users",
+            "type": "PATCH"
+          }
+        ]
+    },
+    {
+        "description": "Delete specific user",
+        "links": [
+          {
+            "href": "/api/deleteUser/:id",
+            "rel": "users",
+            "type": "DELETE"
+          }
+        ]
+    },
+    {
+        "description": "suspend specific user",
+        "links": [
+          {
+            "href": "/api/user/suspend/:id",
+            "rel": "users",
+            "type": "POST"
+          }
+        ]
+    }
+    ,{
+        "description": "unsuspend specific user",
+        "links": [
+          {
+            "href": "/api/user/unsuspend/:id",
+            "rel": "users",
+            "type": "POST"
+          }
+        ]
+    }
+    
+]);
+  });
