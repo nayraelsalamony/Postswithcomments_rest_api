@@ -168,3 +168,14 @@ router.get('/getAllUsers', async (req, res) => {
         res.status(500).json({message: error.message})
     }
 })
+
+//get one user
+router.get('/getOneUser/:id', async (req, res) => {
+    try{
+        const data = await userModel.findById(req.params.id);
+        res.json(data)
+    }
+    catch(error){
+        res.status(500).json({message: error.message})
+    }
+})
