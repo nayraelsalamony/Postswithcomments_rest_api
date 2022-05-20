@@ -104,3 +104,19 @@ router.get('/article/:id/comments', async (req, res) => {
         res.status(500).json({message: error.message})
     }
 })
+// delete comment
+router.delete('/comment/:id/:comment', async (req, res) => {
+    try{
+        const data = await Model.updateOne(
+            {_id: req.params.id}
+            , {
+            $pull: {
+              "comments": {_id: req.params.comment},
+            },
+          });
+          res.send(`Document deleted..`);
+            }
+            catch(error){
+                res.status(500).json({message: error.message})
+            }
+}) 
