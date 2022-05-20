@@ -209,3 +209,19 @@ router.patch('/updateUser/:id', async (req, res) => {
         res.status(400).json({ message: error.message })
     }
 })
+
+// Suspended user 
+userrouter.post('/user/suspend/:id', async (req, res) => {
+    try{
+        const data = await Model.findOneAndUpdate(
+            req.params.id , 
+            { $set: { "isSuspended": req.body.isSuspended  } },
+            {safe: true, upsert: true, new : true},
+           
+            );
+            res.json(data);
+            }
+            catch(error){
+                res.status(500).json({message: error.message})
+            }
+})
