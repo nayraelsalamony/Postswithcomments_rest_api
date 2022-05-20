@@ -120,3 +120,22 @@ router.delete('/comment/:id/:comment', async (req, res) => {
                 res.status(500).json({message: error.message})
             }
 }) 
+// edit comment
+router.patch('/comment/:id/:comment', async (req, res) => {
+    try{
+        const data = await Model.updateOne(
+            {_id: req.params.id}
+            , {
+            $set: {
+              "comments": {
+                content:  req.body.content,
+                username: req.body.username,
+              },
+            },
+          });
+          res.send(`Document updated..`);
+            }
+            catch(error){
+                res.status(500).json({message: error.message})
+            }
+}) 
